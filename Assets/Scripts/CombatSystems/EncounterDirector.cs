@@ -12,30 +12,40 @@ namespace MilehighWorld.CombatSystems
         [Header("Encounter Timeline")]
         [SerializeField] private List<CombatEventSO> sequenceEvents;
 
+        [Header("Scene Data")]
+        [SerializeField] private HorizonGameData sceneData;
+
         // Entity Registries
         private Dictionary<string, NovomindadCharacter> _novomindad = new Dictionary<string, NovomindadCharacter>();
         private Dictionary<string, EnemyCharacter> _enemies = new Dictionary<string, EnemyCharacter>();
 
         private async void Start()
         {
-            InitializeEntities(); // Assumes dictionary population similar to previous iteration
+            InitializeEntities();
             await ProcessEncounterAsync();
         }
 
         private void InitializeEntities()
         {
-            // Placeholder for entity initialization
-            // In a real scenario, this would find characters in the scene and register them
+            // Register characters from the scene
             var allies = FindObjectsByType<NovomindadCharacter>(FindObjectsSortMode.None);
             foreach (var ally in allies)
             {
                 _novomindad[ally.name] = ally;
+                if (sceneData != null && sceneData.characters != null)
+                {
+                    ally.profile = sceneData.characters.Find(c => c.name == ally.name);
+                }
             }
 
             var enemies = FindObjectsByType<EnemyCharacter>(FindObjectsSortMode.None);
             foreach (var enemy in enemies)
             {
                 _enemies[enemy.name] = enemy;
+                if (sceneData != null && sceneData.characters != null)
+                {
+                    enemy.profile = sceneData.characters.Find(c => c.name == enemy.name);
+                }
             }
         }
 
@@ -43,10 +53,55 @@ namespace MilehighWorld.CombatSystems
         {
             Debug.Log("<color=#E0BBE4>--- SCENARIO SEQUENCE COMMENCING ---</color>");
 
+            if (sceneData != null && sceneData.metadata != null)
+            {
+                Debug.Log($"Environment: {sceneData.metadata.environmentDescription} (Saturation: {sceneData.metadata.voidSaturationLevel})");
+            }
+
+            // Process static timeline events
             foreach (var combatEvent in sequenceEvents)
             {
                 if (combatEvent == null) continue;
                 await combatEvent.ExecuteAsync(this);
+            }
+
+            // Process data-driven scenario lines if available
+            if (sceneData != null && sceneData.scenarios != null)
+            {
+                foreach (var scenario in sceneData.scenarios)
+                {
+                    Debug.Log($"<color=white><b>Scenario:</b> {scenario.description}</color>");
+
+                    // Process interactive objects
+                    foreach (var interaction in scenario.interactiveObjects)
+                    {
+                        Debug.Log($"<i>Interacting with {interaction.objectName} at {interaction.coordinates} (Scale: {interaction.scaleFactor})</i>");
+                        await Task.Delay(500); // Small delay for interaction
+                    }
+
+                    // Process dialogue lines
+                    foreach (var dialogue in scenario.dialogueLines)
+                    {
+                        var ally = GetAlly(dialogue.speaker);
+                        if (ally != null)
+                        {
+                            ally.Speak(dialogue.text);
+                        }
+                        else
+                        {
+                            var enemy = GetEnemy(dialogue.speaker);
+                            if (enemy != null)
+                            {
+                                enemy.Speak(dialogue.text);
+                            }
+                            else
+                            {
+                                Debug.Log($"[{dialogue.speaker}]: {dialogue.text}");
+                            }
+                        }
+                        await Task.Delay(1500); // Sequential delay for dialogue
+                    }
+                }
             }
 
             Debug.Log("<color=#E0BBE4>--- SCENARIO SEQUENCE CONCLUDED ---</color>");

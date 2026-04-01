@@ -6,14 +6,17 @@ namespace MilehighWorld.CombatSystems
     {
         public CharacterProfile profile;
 
+        private const string DialogueColor = "red"; // Red for enemy dialogue
+        private const string ReactionColor = "orange"; // Orange for enemy reactions/actions
+
         public void Speak(string line)
         {
-            Debug.Log($"<color=red>[{profile?.name ?? name}]: {line}</color>");
+            Debug.Log($"<color={DialogueColor}>[{profile?.name ?? name}]: {line}</color>");
         }
 
         public void React(string reaction)
         {
-            Debug.Log($"<color=orange>[{profile?.name ?? name}]: {reaction}</color>");
+            Debug.Log($"<color={ReactionColor}>[{profile?.name ?? name}]: {reaction}</color>");
         }
     }
 }

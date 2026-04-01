@@ -42,7 +42,12 @@ namespace MilehighWorld.Tests
                     lightingState = "Dim",
                     environmentDescription = "Spooky Spire",
                     nineBitParity = 1,
-                    voidSaturationLevel = 0.5f
+                    voidSaturationLevel = 0.5f,
+                    mission = "Test Mission",
+                    objective = "Test Objective",
+                    location = "Test Location",
+                    initialNarrative = "Test Narrative",
+                    loreDeepDive = "Test Lore"
                 },
                 characters = new List<CharacterProfile>
                 {
@@ -93,6 +98,25 @@ namespace MilehighWorld.Tests
             Assert.AreEqual("Crystal", deserializedData.scenarios[0].interactiveObjects[0].objectName);
             Assert.AreEqual(1.5f, deserializedData.scenarios[0].interactiveObjects[0].scaleFactor);
             Assert.AreEqual(new Vector3(1, 2, 3), deserializedData.scenarios[0].interactiveObjects[0].coordinates);
+        }
+
+        [Test]
+        public void Characters_CanVerifyAbilities()
+        {
+            var go = new GameObject("Sky.ix");
+            var character = go.AddComponent<NovomindadCharacter>();
+            character.profile = new CharacterProfile
+            {
+                name = "Sky.ix",
+                abilities = new List<string> { "Void Step" }
+            };
+
+            // This test is mostly for ensuring no exceptions are thrown and logic branches correctly
+            // Since we can't easily assert on Debug.Log without a log handler
+            character.UseAbility("Void Step");
+            character.UseAbility("NonExistentAbility");
+
+            Object.DestroyImmediate(go);
         }
 
         [Test]

@@ -55,6 +55,10 @@ namespace MilehighWorld.CombatSystems
 
             if (sceneData != null && sceneData.metadata != null)
             {
+                Debug.Log($"<color=white><b>Mission:</b> {sceneData.metadata.mission}</color>");
+                Debug.Log($"<color=white><b>Objective:</b> {sceneData.metadata.objective}</color>");
+                Debug.Log($"<color=white><b>Location:</b> {sceneData.metadata.location}</color>");
+                Debug.Log($"<color=white><b>Initial Narrative:</b>\n{sceneData.metadata.initialNarrative}</color>");
                 Debug.Log($"Environment: {sceneData.metadata.environmentDescription} (Saturation: {sceneData.metadata.voidSaturationLevel})");
             }
 
@@ -100,6 +104,11 @@ namespace MilehighWorld.CombatSystems
                         }
                     }
                 }
+            }
+
+            if (sceneData != null && sceneData.metadata != null && !string.IsNullOrEmpty(sceneData.metadata.loreDeepDive))
+            {
+                Debug.Log($"<color=white><b>Lore Deep Dive:</b>\n{sceneData.metadata.loreDeepDive}</color>");
             }
 
             Debug.Log("<color=#E0BBE4>--- SCENARIO SEQUENCE CONCLUDED ---</color>");

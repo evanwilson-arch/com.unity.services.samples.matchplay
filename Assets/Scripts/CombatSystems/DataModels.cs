@@ -11,6 +11,11 @@ namespace MilehighWorld.CombatSystems
         public string environmentDescription;
         public int nineBitParity;
         public float voidSaturationLevel;
+        public string mission;
+        public string objective;
+        public string location;
+        public string initialNarrative;
+        public string loreDeepDive;
     }
 
     [Serializable]
@@ -22,6 +27,7 @@ namespace MilehighWorld.CombatSystems
         public List<string> traits;
         public string motivation;
         public string behaviorScript;
+        public List<string> abilities;
     }
 
     [Serializable]

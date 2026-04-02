@@ -1,9 +1,3 @@
-using System.Collections.Generic;
-using System;
-using Matchplay.Networking;
-using Unity.Netcode;
-using UnityEngine;
-
 namespace Matchplay.Shared
 {
     /// <summary>

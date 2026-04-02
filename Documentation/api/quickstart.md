@@ -14,8 +14,6 @@ To get started with the Jules REST API, you'll need an API key.
 
 In the Jules web app, go to the **[Settings](https://jules.google.com/settings#api)** page to create a new API key. You can have at most 3 API keys at a time.
 
-![Jules REST API Key creation interface](../../../../../public/jules-api-key-settings.png)
-
 ### Use Your API Key
 
 To authenticate your requests, pass the API key in the `X-Goog-Api-Key` header of your API calls.
@@ -28,7 +26,7 @@ Keep your API keys secure. Don't share them or embed them in public code. For yo
 
 The Jules REST API is built around a few core resources. Understanding these will help you use the API effectively.
 
-- **Source** — An input source for the agent (e.g., a GitHub repository). Before using a source using the API, you must first [install the Jules GitHub app](/docs/) through the Jules web app.
+- **Source** — An input source for the agent (e.g., a GitHub repository). Before using a source using the API, you must first [install the Jules GitHub app](https://jules.google.com/docs/) through the Jules web app.
 - **Session** — A continuous unit of work within a specific context, similar to a chat session. A session is initiated with a prompt and a source.
 - **Activity** — A single unit of work within a Session. A Session contains multiple activities from both the user and the agent, such as generating a plan, sending a message, or updating progress.
 

@@ -134,9 +134,9 @@ namespace Matchplay.Server
             Debug.Log($"Host ApprovalCheck: connecting client: ({request.ClientNetworkId}) - {userData}");
 
             //Test for Duplicate Login.
-            if (m_ClientData.ContainsKey(userData.userAuthId))
+            if (m_ClientData.TryGetValue(userData.userAuthId, out var existingUserData))
             {
-                ulong oldClientId = m_ClientData[userData.userAuthId].networkId;
+                ulong oldClientId = existingUserData.networkId;
                 Debug.Log($"Duplicate ID Found : {userData.userAuthId}, Disconnecting Old user");
 
                 // kicking old client to leave only current

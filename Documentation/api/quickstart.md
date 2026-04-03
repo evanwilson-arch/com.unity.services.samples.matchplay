@@ -180,6 +180,10 @@ The response will be empty because the agent will send its response in the next 
 
 ## Next steps
 
+Now that you've made your first API call, you can explore more advanced workflows:
+
+- **[Install the Jules GitHub app](/docs/)** to connect your own repositories.
+- **[Learn more about Session Activities](#interact-with-the-agent)** to track the agent's progress and communicate with it.
 Now that you've created your first session, you can:
 
 -   **Explore the API Reference**: Once the API reaches a stable release, you'll be able to find a comprehensive list of all available endpoints and their parameters.
